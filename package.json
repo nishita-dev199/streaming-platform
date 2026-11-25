@@ -1,0 +1,29 @@
+{
+  "name": "streaming-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Streaming platform monorepo with Next.js, Tailwind CSS, Express, and PostgreSQL",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n api,web -c cyan,magenta \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:api": "npm run dev -w @repo/api",
+    "dev:web": "npm run dev -w @repo/web",
+    "build": "npm run build -w @repo/shared && npm run build -w @repo/api && npm run build -w @repo/web",
+    "start": "concurrently -k -n api,web -c cyan,magenta \"npm:start:api\" \"npm:start:web\"",
+    "start:api": "npm run start -w @repo/api",
+    "start:web": "npm run start -w @repo/web",
+    "typecheck": "npm run typecheck -w @repo/shared && npm run typecheck -w @repo/api && npm run typecheck -w @repo/web",
+    "db:up": "docker compose up -d postgres",
+    "db:down": "docker compose down",
+    "db:migrate": "npm run db:migrate -w @repo/api"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.7"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  }
+}
